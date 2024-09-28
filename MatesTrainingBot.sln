@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatesTrainingBot", "MatesTr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{1F745D26-C616-42E3-B2D9-B308297DE0BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{37147C2F-9391-4411-969F-E88BDE458667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{24F3FC29-751F-412B-9085-80FEC389B68A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{1F745D26-C616-42E3-B2D9-B308297DE0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F745D26-C616-42E3-B2D9-B308297DE0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F745D26-C616-42E3-B2D9-B308297DE0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37147C2F-9391-4411-969F-E88BDE458667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37147C2F-9391-4411-969F-E88BDE458667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37147C2F-9391-4411-969F-E88BDE458667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37147C2F-9391-4411-969F-E88BDE458667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F3FC29-751F-412B-9085-80FEC389B68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F3FC29-751F-412B-9085-80FEC389B68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F3FC29-751F-412B-9085-80FEC389B68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F3FC29-751F-412B-9085-80FEC389B68A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

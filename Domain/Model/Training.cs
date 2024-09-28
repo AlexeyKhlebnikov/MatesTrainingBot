@@ -1,4 +1,7 @@
-﻿namespace Domain;
+﻿
+using NetTopologySuite.Geometries;
+
+namespace Domain.Model;
 
 public sealed class Training
 {
@@ -10,7 +13,7 @@ public sealed class Training
     /// <summary>
     /// Организатор тренировки
     /// </summary>
-    public User Author { get; init; }
+    public User Author { get; init; } = null!;
     
     /// <summary>
     /// Дата создания
@@ -25,12 +28,12 @@ public sealed class Training
     /// <summary>
     /// Время проведения тренировки
     /// </summary>
-    public TimeOnly Time { get; init; }
+    public DateTimeOffset Time { get; init; }
 
     /// <summary>
     /// Тип тренировки
     /// </summary>
-    public TrainingSubType TrainingType { get; init; }
+    public TrainingSubType TrainingType { get; init; } = null!;
     
     /// <summary>
     /// Название
@@ -45,12 +48,12 @@ public sealed class Training
     /// <summary>
     /// Точка старта
     /// </summary>
-    public Point StartPoint { get; init; }
+    public Point StartPoint { get; init; } = null!;
     
     /// <summary>
     /// Дистанция
     /// </summary>
-    public Distance Distance { get; init; }
+    public uint Distance { get; init; }
     
     /// <summary>
     /// Средняя скорость\темп

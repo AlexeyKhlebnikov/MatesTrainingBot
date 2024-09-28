@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  
+  training-service-db:
+    image: postgis/postgis:latest
+    container_name: training-service-db
+    environment:
+      - POSTGRES_DB=training-service
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5400:5432"
+    volumes:
+      - training-service-db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U test -d training-service'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  training-service-db:
+    name: training-service-db
