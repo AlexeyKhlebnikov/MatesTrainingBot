@@ -57,6 +57,7 @@ internal sealed class TrainingEntityTypeConfiguration : IEntityTypeConfiguration
             .WithMany();
 
         builder.HasOne(x => x.TrainingType)
-            .WithMany();
+            .WithMany()
+            .HasForeignKey(x=> x.TrainingTypeId);
     }
 }
