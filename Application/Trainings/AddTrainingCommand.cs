@@ -9,7 +9,7 @@ public sealed class AddTrainingCommand : IRequest
     /// <summary>
     /// Организатор тренировки
     /// </summary>
-    public User Author { get; init; } = null!;
+    public long AuthorId { get; init; }
 
     /// <summary>
     /// Дата проведения тренировки

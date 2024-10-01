@@ -21,7 +21,7 @@ public class AddTrainingCommandHandlerTests : TestCollection
         };
         var repoMock = new Mock<ITrainingRepository>();
         var commandHandler =
-            new AddTrainingCommandHandler(repoMock.Object, new Mock<ITrainingTypesQueryRepository>().Object);
+            new AddTrainingCommandHandler(repoMock.Object, new Mock<ITrainingTypesQueryRepository>().Object, null);
         //act
         var action = () => commandHandler.Handle(command, CancellationToken.None);
         //assert
@@ -39,7 +39,7 @@ public class AddTrainingCommandHandlerTests : TestCollection
         };
         var repoMock = new Mock<ITrainingRepository>();
         var commandHandler =
-            new AddTrainingCommandHandler(repoMock.Object, new Mock<ITrainingTypesQueryRepository>().Object);
+            new AddTrainingCommandHandler(repoMock.Object, new Mock<ITrainingTypesQueryRepository>().Object, null);
         //act
         var action = () => commandHandler.Handle(command, CancellationToken.None);
         //assert
@@ -63,7 +63,7 @@ public class AddTrainingCommandHandlerTests : TestCollection
             .Setup(x => x.GetSubTypes(It.IsAny<int?>(), CancellationToken.None))
             .Returns(() => Task.FromResult<IReadOnlyCollection<TrainingSubType>>([]));
 
-        var commandHandler = new AddTrainingCommandHandler(repoMock.Object, trainingQueryRepoMock.Object);
+        var commandHandler = new AddTrainingCommandHandler(repoMock.Object, trainingQueryRepoMock.Object, null);
         //act
         var action = () => commandHandler.Handle(command, CancellationToken.None);
         //assert
@@ -71,7 +71,7 @@ public class AddTrainingCommandHandlerTests : TestCollection
     }
 
     [Fact]
-    public async Task Handle_CorrectDate_Success()
+    public async Task Handle_CorrectCommand_Success()
     {
         //arrange
         var subTypeId = 1;
@@ -79,23 +79,28 @@ public class AddTrainingCommandHandlerTests : TestCollection
         {
             Date = DateOnly.FromDateTime(DateTime.Today),
             Time = DateTimeOffset.Now.AddHours(1),
-            TrainingSubTypeId = subTypeId
+            TrainingSubTypeId = subTypeId,
+            AuthorId = 1
         };
-        var repoMock = new Mock<ITrainingRepository>();
+        var trainingRepository = new Mock<ITrainingRepository>();
         var trainingQueryRepoMock = new Mock<ITrainingTypesQueryRepository>();
         trainingQueryRepoMock
             .Setup(x => x.GetSubTypes(It.IsAny<int?>(), CancellationToken.None))
             .Returns(
                 () => Task.FromResult<IReadOnlyCollection<TrainingSubType>>([new TrainingSubType {Id = subTypeId}]));
+        
+        var userRepository = new Mock<IUserRepository>();
+        userRepository.Setup(x => x.GetUser(command.AuthorId, CancellationToken.None))
+            .Returns(Task.FromResult(new User())!);
 
-        var commandHandler = new AddTrainingCommandHandler(repoMock.Object, trainingQueryRepoMock.Object);
+        var commandHandler = new AddTrainingCommandHandler(trainingRepository.Object, trainingQueryRepoMock.Object, userRepository.Object);
 
         //act
         var action = () => commandHandler.Handle(command, CancellationToken.None);
 
         //assert
         await action.Should().NotThrowAsync();
-        repoMock.Verify(x => x.Add(It.IsAny<Training>(), CancellationToken.None), Times.Once);
-        trainingQueryRepoMock.Verify(x=> x.GetSubTypes(null, CancellationToken.None), Times.Once);
+        trainingRepository.Verify(x => x.Add(It.IsAny<Training>(), CancellationToken.None), Times.Once);
+        trainingQueryRepoMock.Verify(x => x.GetSubTypes(null, CancellationToken.None), Times.Once);
     }
 }

@@ -11,6 +11,11 @@ public sealed class Training
     public long Id { get; init; }
     
     /// <summary>
+    /// Id автора тренировки
+    /// </summary>
+    public long AuthorId { get; init; } 
+        
+    /// <summary>
     /// Организатор тренировки
     /// </summary>
     public User Author { get; init; } = null!;

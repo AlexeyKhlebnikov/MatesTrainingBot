@@ -54,10 +54,11 @@ internal sealed class TrainingEntityTypeConfiguration : IEntityTypeConfiguration
             .IsRequired();
 
         builder.HasOne(x => x.Author)
-            .WithMany();
+            .WithMany()
+            .HasForeignKey(x => x.AuthorId);
 
         builder.HasOne(x => x.TrainingType)
             .WithMany()
-            .HasForeignKey(x=> x.TrainingTypeId);
+            .HasForeignKey(x => x.TrainingTypeId);
     }
 }

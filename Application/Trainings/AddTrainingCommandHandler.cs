@@ -7,17 +7,18 @@ namespace Application.Trainings;
 
 public sealed class AddTrainingCommandHandler(
     ITrainingRepository trainingRepository,
-    ITrainingTypesQueryRepository trainingTypesQueryRepository)
+    ITrainingTypesQueryRepository trainingTypesQueryRepository,
+    IUserRepository userRepository)
     : IRequestHandler<AddTrainingCommand>
 {
     public async Task Handle(AddTrainingCommand request, CancellationToken cancellationToken)
     {
-        await Verify(request, cancellationToken);
+        var user = await Verify(request, cancellationToken);
 
         var training = new Training
         {
             CreatedAt = DateTime.UtcNow,
-            Author = request.Author,
+            Author = user,
             Date = request.Date,
             Time = request.Time,
             Name = request.Name,
@@ -31,7 +32,7 @@ public sealed class AddTrainingCommandHandler(
         await trainingRepository.Add(training, cancellationToken);
     }
 
-    private async Task Verify(AddTrainingCommand command, CancellationToken cancellationToken)
+    private async Task<User> Verify(AddTrainingCommand command, CancellationToken cancellationToken)
     {
         if (command.Date < DateOnly.FromDateTime(DateTime.Now) ||
             command.Time.ToUniversalTime() < DateTime.UtcNow.ToUniversalTime())
@@ -41,6 +42,10 @@ public sealed class AddTrainingCommandHandler(
         if (subTypes.All(x => x.Id != command.TrainingSubTypeId))
             throw new InvalidTrainingSubTypeException();
 
-        //TODO: check author
+        var user = await userRepository.GetUser(command.AuthorId, cancellationToken);
+        if (user == null)
+            throw new UserNotFoundException();
+        
+        return user;
     }
 }
