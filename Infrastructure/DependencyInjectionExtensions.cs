@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain;
+using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +27,9 @@ public static class DependencyInjectionExtensions
                 });
         });
 
-        return services;
+        return services
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<ITrainingRepository, TrainingRepository>()
+            .AddScoped<ITrainingTypesQueryRepository, TrainingTypeQueryRepository>();
     }
 }
