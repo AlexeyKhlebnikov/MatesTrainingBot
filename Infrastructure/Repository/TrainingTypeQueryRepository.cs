@@ -12,6 +12,7 @@ internal sealed class TrainingTypeQueryRepository(TrainingDbContext dbContext) :
     {
         return await dbContext.Set<TrainingType>()
             .AsNoTracking()
+            .Include(x=> x.SubTypes)
             .Take(MaxItems)
             .ToArrayAsync(cancellationToken);
     }

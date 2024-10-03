@@ -16,6 +16,10 @@ internal sealed class TrainingTypeEntityTypeConfiguration : IEntityTypeConfigura
             .HasMaxLength(100)
             .IsRequired();
 
+        builder.HasMany(x => x.SubTypes)
+            .WithOne(x => x.TrainingType)
+            .HasForeignKey(x => x.TrainingTypeId);
+
         builder.HasData(new TrainingType {Id = 1, Name = "Бег"},
             new TrainingType {Id = 2, Name = "Велоспорт"},
             new TrainingType {Id = 3, Name = "Беговые лыжи"},

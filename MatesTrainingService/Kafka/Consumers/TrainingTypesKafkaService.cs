@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Confluent.Kafka;
 using Domain;
 
@@ -8,6 +9,10 @@ internal sealed class TrainingTypesKafkaService : BaseKafkaBackgroundService<lon
 {
     protected override string TopicName => "TrainingTypesRequest";
     private const string ProduceTopicName = "TrainingTypesChanged";
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        ReferenceHandler = ReferenceHandler.Preserve
+    };
 
     public TrainingTypesKafkaService(
         IServiceScopeFactory serviceScopeFactory,
@@ -22,7 +27,7 @@ internal sealed class TrainingTypesKafkaService : BaseKafkaBackgroundService<lon
         await using var scope = ScopeFactory.CreateAsyncScope();
         var repository = scope.ServiceProvider.GetRequiredService<ITrainingTypesQueryRepository>();
         var types = await repository.GetTypes(cancellationToken);
-        var serializedTypes = JsonSerializer.Serialize(types);
+        var serializedTypes = JsonSerializer.Serialize(types, JsonOptions);
         var responseMessage = new Message<long, string>
         {
             Headers = message.Message.Headers,

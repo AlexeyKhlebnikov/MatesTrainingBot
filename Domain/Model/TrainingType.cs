@@ -1,5 +1,8 @@
 ﻿namespace Domain.Model;
 
+/// <summary>
+/// Тип тренировки
+/// </summary>
 public sealed class TrainingType
 {
     /// <summary>
@@ -11,4 +14,9 @@ public sealed class TrainingType
     /// Название
     /// </summary>
     public string Name { get; init; } = null!;
+    
+    /// <summary>
+    /// Виды тренировок
+    /// </summary>
+    public ICollection<TrainingSubType> SubTypes { get; init; } = new List<TrainingSubType>();
 }
