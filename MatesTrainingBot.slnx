@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Project Path="Application\Application.csproj" Type="Classic C#" />
+  <Project Path="Domain\Domain.csproj" Type="Classic C#" />
+  <Project Path="Infrastructure\Infrastructure.csproj" Type="Classic C#" />
+  <Project Path="MatesTrainingBot\MatesTrainingBot.csproj" Type="Classic C#" />
+  <Project Path="MatesTrainingService\MatesTrainingService.csproj" Type="Classic C#" />
+  <Project Path="Tests\Tests.csproj" Type="Classic C#" />
+</Solution>
