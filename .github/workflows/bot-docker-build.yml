@@ -2,7 +2,7 @@ name: Docker Build and Push
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "feature/*" ]
   pull_request:
     branches: [ "main" ]
 
@@ -15,7 +15,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        project: [ 'MaterTrainingBot' ]
+        project: [ 'MatesTrainingBot' ]
 
     steps:
       - name: Checkout code
